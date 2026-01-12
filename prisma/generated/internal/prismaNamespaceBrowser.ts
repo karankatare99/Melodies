@@ -92,11 +92,10 @@ export type SpaceScalarFieldEnum = (typeof SpaceScalarFieldEnum)[keyof typeof Sp
 
 export const SongScalarFieldEnum = {
   id: 'id',
-  currentTrack: 'currentTrack',
+  streaming: 'streaming',
   spaceId: 'spaceId',
   title: 'title',
   channel: 'channel',
-  thumbnail: 'thumbnail',
   url: 'url',
   votes: 'votes'
 } as const

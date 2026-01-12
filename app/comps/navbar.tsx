@@ -18,7 +18,7 @@ export const Navbar = () => {
         <div className="flex justify-between items-center">
           
           <Link href="/" className="text-3xl uppercase tracking-widest relative group">
-            <span className="bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-purple-500 drop-shadow-lg group-hover:from-cyan-300 group-hover:to-purple-400 transition-all duration-300">
+            <span className="bg-clip-text text-transparent bg-linear-to-r font-righteous from-cyan-400 to-purple-500 drop-shadow-lg group-hover:from-cyan-300 group-hover:to-purple-400 transition-all duration-300">
               Melodies
             </span>
           </Link>
