@@ -30,6 +30,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "prisma": "^7.2.0",
+    "react-player": "^3.4.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "youtube-sr": "^4.3.12"

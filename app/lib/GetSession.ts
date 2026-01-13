@@ -20,7 +20,6 @@ export interface Song {
   spaceId: string;
   title: string;
   channel: string;
-  thumbnail: string;
   url: string;
   votes: number;
 }
