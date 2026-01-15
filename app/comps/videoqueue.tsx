@@ -17,13 +17,31 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [urlInput, setUrlInput] = useState("");
 
-    const handleVote = async (id: string) => {
-        await axios.post('/api/space/votesong', { songId: id });
+    const handleVote = async (songId: string) => {
+
+        setQueue(queue => 
+            queue.map(song => 
+                song.id === songId ? { ...song, votes: song.votes + 1 } : song
+            )
+        );
+
+        try {
+            await axios.post('/api/space/votesong', { songId });
+        } catch (e) {
+            setQueue(queue => 
+                queue.map(song => 
+                    song.id === songId ? { ...song, votes: song.votes - 1 } : song
+                )
+            )
+
+            console.error('Vote failed, reverted UI');
+        }
+
+        setJustVotedId(songId);
     };
 
     const handleAddSong = async () => {
         try {
-
             const res = await axios.post('/api/space/addsong', { spaceId, url:urlInput });
             const { newSong } = res.data;
             setQueue([...queue, newSong]);
@@ -57,10 +75,11 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
                     </button>
                 </div>
 
-                {/* Added overflow-x-hidden here to strictly prevent scrollbars */}
                 <div className="flex-1 overflow-y-auto overflow-x-hidden pr-2 relative z-10 space-y-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-700">
                     <AnimatePresence>
-                        {queue.map((song, index) => (
+                        {[...queue]
+                        .sort((a, b) => b.votes - a.votes)
+                        .map((song, index) => (
                             <motion.div
                                 key={song.url}
                                 layout
@@ -68,13 +87,12 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
                                 animate={{
                                     opacity: 1,
                                     y: 0,
-                                    backgroundColor: justVotedId === song.url ? "rgba(34, 211, 238, 0.2)" : "rgba(255, 255, 255, 0)",
-                                    borderColor: justVotedId === song.url ? "rgba(34, 211, 238, 0.5)" : "rgba(255, 255, 255, 0.1)"
+                                    backgroundColor: justVotedId === song.id ? "rgba(34, 211, 238, 0.2)" : "rgba(255, 255, 255, 0)",
+                                    borderColor: justVotedId === song.id ? "rgba(34, 211, 238, 0.5)" : "rgba(255, 255, 255, 0.1)"
                                 }}
                                 transition={{ duration: 0.4 }}
                                 className="flex items-center justify-between p-3 rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all group w-full"
                             >
-                                {/* LEFT SIDE: Added min-w-0 to allow shrinking */}
                                 <div className="flex items-center gap-4 flex-1 min-w-0">
                                     <div className={`w-12 h-12 rounded-2xl bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 flex items-center justify-center text-white/70 font-bold shadow-sm shrink-0`}>
                                         {index + 1}
@@ -89,7 +107,6 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
                                     </div>
                                 </div>
 
-                                {/* RIGHT SIDE: Added shrink-0 so button never collapses */}
                                 <div className="flex items-center gap-3 pl-4 shrink-0">
                                     <span className="font-mono text-sm text-slate-300 min-w-6 text-center">
                                         {song.votes}

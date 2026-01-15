@@ -10,12 +10,13 @@ export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const parseResult = Schema.safeParse(body);
-        if (!parseResult.success) return NextResponse.json({ message: "Invalid Body" });
+        if (!parseResult.success) return NextResponse.json({ message: "Invalid Body" }, { status: 400 });
 
         const { songId } = parseResult.data;
 
         await prisma.song.update({ where: { id: songId }, data: { votes: { increment: 1 } } })
 
+        return NextResponse.json({ message: "Voted successfully" })
     } catch (e) {
         console.error('Topsong API error:', e);
         return NextResponse.json({ message: "Failed to fetch top Song" }, { status: 500 });
