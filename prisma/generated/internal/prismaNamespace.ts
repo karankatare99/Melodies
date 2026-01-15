@@ -687,7 +687,6 @@ export type SpaceScalarFieldEnum = (typeof SpaceScalarFieldEnum)[keyof typeof Sp
 
 export const SongScalarFieldEnum = {
   id: 'id',
-  streaming: 'streaming',
   spaceId: 'spaceId',
   title: 'title',
   channel: 'channel',
@@ -731,13 +730,6 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

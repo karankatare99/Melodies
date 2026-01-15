@@ -36,7 +36,6 @@ export type SongSumAggregateOutputType = {
 
 export type SongMinAggregateOutputType = {
   id: string | null
-  streaming: boolean | null
   spaceId: string | null
   title: string | null
   channel: string | null
@@ -46,7 +45,6 @@ export type SongMinAggregateOutputType = {
 
 export type SongMaxAggregateOutputType = {
   id: string | null
-  streaming: boolean | null
   spaceId: string | null
   title: string | null
   channel: string | null
@@ -56,7 +54,6 @@ export type SongMaxAggregateOutputType = {
 
 export type SongCountAggregateOutputType = {
   id: number
-  streaming: number
   spaceId: number
   title: number
   channel: number
@@ -76,7 +73,6 @@ export type SongSumAggregateInputType = {
 
 export type SongMinAggregateInputType = {
   id?: true
-  streaming?: true
   spaceId?: true
   title?: true
   channel?: true
@@ -86,7 +82,6 @@ export type SongMinAggregateInputType = {
 
 export type SongMaxAggregateInputType = {
   id?: true
-  streaming?: true
   spaceId?: true
   title?: true
   channel?: true
@@ -96,7 +91,6 @@ export type SongMaxAggregateInputType = {
 
 export type SongCountAggregateInputType = {
   id?: true
-  streaming?: true
   spaceId?: true
   title?: true
   channel?: true
@@ -193,7 +187,6 @@ export type SongGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type SongGroupByOutputType = {
   id: string
-  streaming: boolean
   spaceId: string
   title: string
   channel: string
@@ -226,7 +219,6 @@ export type SongWhereInput = {
   OR?: Prisma.SongWhereInput[]
   NOT?: Prisma.SongWhereInput | Prisma.SongWhereInput[]
   id?: Prisma.StringFilter<"Song"> | string
-  streaming?: Prisma.BoolFilter<"Song"> | boolean
   spaceId?: Prisma.StringFilter<"Song"> | string
   title?: Prisma.StringFilter<"Song"> | string
   channel?: Prisma.StringFilter<"Song"> | string
@@ -237,7 +229,6 @@ export type SongWhereInput = {
 
 export type SongOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  streaming?: Prisma.SortOrder
   spaceId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   channel?: Prisma.SortOrder
@@ -251,7 +242,6 @@ export type SongWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SongWhereInput | Prisma.SongWhereInput[]
   OR?: Prisma.SongWhereInput[]
   NOT?: Prisma.SongWhereInput | Prisma.SongWhereInput[]
-  streaming?: Prisma.BoolFilter<"Song"> | boolean
   spaceId?: Prisma.StringFilter<"Song"> | string
   title?: Prisma.StringFilter<"Song"> | string
   channel?: Prisma.StringFilter<"Song"> | string
@@ -262,7 +252,6 @@ export type SongWhereUniqueInput = Prisma.AtLeast<{
 
 export type SongOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  streaming?: Prisma.SortOrder
   spaceId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   channel?: Prisma.SortOrder
@@ -280,7 +269,6 @@ export type SongScalarWhereWithAggregatesInput = {
   OR?: Prisma.SongScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SongScalarWhereWithAggregatesInput | Prisma.SongScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Song"> | string
-  streaming?: Prisma.BoolWithAggregatesFilter<"Song"> | boolean
   spaceId?: Prisma.StringWithAggregatesFilter<"Song"> | string
   title?: Prisma.StringWithAggregatesFilter<"Song"> | string
   channel?: Prisma.StringWithAggregatesFilter<"Song"> | string
@@ -290,7 +278,6 @@ export type SongScalarWhereWithAggregatesInput = {
 
 export type SongCreateInput = {
   id: string
-  streaming?: boolean
   title: string
   channel: string
   url: string
@@ -300,7 +287,6 @@ export type SongCreateInput = {
 
 export type SongUncheckedCreateInput = {
   id: string
-  streaming?: boolean
   spaceId: string
   title: string
   channel: string
@@ -310,7 +296,6 @@ export type SongUncheckedCreateInput = {
 
 export type SongUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  streaming?: Prisma.BoolFieldUpdateOperationsInput | boolean
   title?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
@@ -320,7 +305,6 @@ export type SongUpdateInput = {
 
 export type SongUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  streaming?: Prisma.BoolFieldUpdateOperationsInput | boolean
   spaceId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
@@ -330,7 +314,6 @@ export type SongUncheckedUpdateInput = {
 
 export type SongCreateManyInput = {
   id: string
-  streaming?: boolean
   spaceId: string
   title: string
   channel: string
@@ -340,7 +323,6 @@ export type SongCreateManyInput = {
 
 export type SongUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  streaming?: Prisma.BoolFieldUpdateOperationsInput | boolean
   title?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
@@ -349,7 +331,6 @@ export type SongUpdateManyMutationInput = {
 
 export type SongUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  streaming?: Prisma.BoolFieldUpdateOperationsInput | boolean
   spaceId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
@@ -369,7 +350,6 @@ export type SongOrderByRelationAggregateInput = {
 
 export type SongCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  streaming?: Prisma.SortOrder
   spaceId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   channel?: Prisma.SortOrder
@@ -383,7 +363,6 @@ export type SongAvgOrderByAggregateInput = {
 
 export type SongMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  streaming?: Prisma.SortOrder
   spaceId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   channel?: Prisma.SortOrder
@@ -393,7 +372,6 @@ export type SongMaxOrderByAggregateInput = {
 
 export type SongMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  streaming?: Prisma.SortOrder
   spaceId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   channel?: Prisma.SortOrder
@@ -447,10 +425,6 @@ export type SongUncheckedUpdateManyWithoutSpaceNestedInput = {
   deleteMany?: Prisma.SongScalarWhereInput | Prisma.SongScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -461,7 +435,6 @@ export type IntFieldUpdateOperationsInput = {
 
 export type SongCreateWithoutSpaceInput = {
   id: string
-  streaming?: boolean
   title: string
   channel: string
   url: string
@@ -470,7 +443,6 @@ export type SongCreateWithoutSpaceInput = {
 
 export type SongUncheckedCreateWithoutSpaceInput = {
   id: string
-  streaming?: boolean
   title: string
   channel: string
   url: string
@@ -508,7 +480,6 @@ export type SongScalarWhereInput = {
   OR?: Prisma.SongScalarWhereInput[]
   NOT?: Prisma.SongScalarWhereInput | Prisma.SongScalarWhereInput[]
   id?: Prisma.StringFilter<"Song"> | string
-  streaming?: Prisma.BoolFilter<"Song"> | boolean
   spaceId?: Prisma.StringFilter<"Song"> | string
   title?: Prisma.StringFilter<"Song"> | string
   channel?: Prisma.StringFilter<"Song"> | string
@@ -518,7 +489,6 @@ export type SongScalarWhereInput = {
 
 export type SongCreateManySpaceInput = {
   id: string
-  streaming?: boolean
   title: string
   channel: string
   url: string
@@ -527,7 +497,6 @@ export type SongCreateManySpaceInput = {
 
 export type SongUpdateWithoutSpaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  streaming?: Prisma.BoolFieldUpdateOperationsInput | boolean
   title?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
@@ -536,7 +505,6 @@ export type SongUpdateWithoutSpaceInput = {
 
 export type SongUncheckedUpdateWithoutSpaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  streaming?: Prisma.BoolFieldUpdateOperationsInput | boolean
   title?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
@@ -545,7 +513,6 @@ export type SongUncheckedUpdateWithoutSpaceInput = {
 
 export type SongUncheckedUpdateManyWithoutSpaceInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  streaming?: Prisma.BoolFieldUpdateOperationsInput | boolean
   title?: Prisma.StringFieldUpdateOperationsInput | string
   channel?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
@@ -556,7 +523,6 @@ export type SongUncheckedUpdateManyWithoutSpaceInput = {
 
 export type SongSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  streaming?: boolean
   spaceId?: boolean
   title?: boolean
   channel?: boolean
@@ -567,7 +533,6 @@ export type SongSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type SongSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  streaming?: boolean
   spaceId?: boolean
   title?: boolean
   channel?: boolean
@@ -578,7 +543,6 @@ export type SongSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type SongSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  streaming?: boolean
   spaceId?: boolean
   title?: boolean
   channel?: boolean
@@ -589,7 +553,6 @@ export type SongSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type SongSelectScalar = {
   id?: boolean
-  streaming?: boolean
   spaceId?: boolean
   title?: boolean
   channel?: boolean
@@ -597,7 +560,7 @@ export type SongSelectScalar = {
   votes?: boolean
 }
 
-export type SongOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "streaming" | "spaceId" | "title" | "channel" | "url" | "votes", ExtArgs["result"]["song"]>
+export type SongOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "spaceId" | "title" | "channel" | "url" | "votes", ExtArgs["result"]["song"]>
 export type SongInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   space?: boolean | Prisma.SpaceDefaultArgs<ExtArgs>
 }
@@ -615,7 +578,6 @@ export type $SongPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    streaming: boolean
     spaceId: string
     title: string
     channel: string
@@ -1046,7 +1008,6 @@ export interface Prisma__SongClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface SongFieldRefs {
   readonly id: Prisma.FieldRef<"Song", 'String'>
-  readonly streaming: Prisma.FieldRef<"Song", 'Boolean'>
   readonly spaceId: Prisma.FieldRef<"Song", 'String'>
   readonly title: Prisma.FieldRef<"Song", 'String'>
   readonly channel: Prisma.FieldRef<"Song", 'String'>

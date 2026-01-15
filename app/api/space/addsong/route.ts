@@ -4,40 +4,30 @@ import YouTube from "youtube-sr";
 import z from "zod";
 
 const Schema = z.object({
-    space: z.object({
-        id: z.string(),
-        userId: z.string(),
-        name: z.string(),
-        songs: z.any()
-    }),
-    url: z.string().includes("https://www.youtube.com/watch?v=")
+    spaceId: z.string(),
+    url: z.string()
 })
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
         const parseResult = Schema.safeParse(body);
-        if (!parseResult.success) return NextResponse.json({ message: "Invalid Body" })
+        if (!parseResult.success) return NextResponse.json({ message: "Invalid request" }, { status: 400 })
+        const { spaceId, url } = parseResult.data;
 
-        const { id, songs } = parseResult.data.space;
-        const { url } = parseResult.data;
+        const songId = url.split("?v=")[1].split("&")[0]
+        if (!songId) return NextResponse.json({ message: "Invalid YouTube URL format" }, { status: 400 })
+
+        const existingSong = await prisma.song.findUnique({ where: { id: songId } })
+        if (existingSong) return NextResponse.json({ message: "Song already in the queue" }, { status: 409 })
 
         const video_data = await YouTube.getVideo(url);
+        if (!video_data) return NextResponse.json({ message: "Video not found" }, { status: 404 })
 
-        if (!video_data) return NextResponse.json({ message: "Video not found" }, { status: 400 })
+        const title = video_data.title || "Title Unavailable";
+        const channel =  video_data.channel?.name || "Channel Unavailable";
 
-        let { title } = video_data;
-        if (!title) title = "Title Unavailable";
-
-        const { channel } = video_data;
-        let channel_name = channel?.name;
-        if (!channel_name) channel_name = "Channel Unavailable";
-
-        let streaming = false;
-        if (!songs) streaming = true 
-
-        const songId = url.split("?v=")[1]
-        const newSong = await prisma.song.create({ data: { id: songId, streaming, spaceId: id, title, channel: channel_name, url, votes: 0 } })
+        const newSong = await prisma.song.create({ data: { id: songId, spaceId, title, channel, url, votes: 0 } })
 
         return NextResponse.json({ newSong })
     } catch (e) {

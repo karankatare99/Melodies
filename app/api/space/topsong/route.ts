@@ -16,13 +16,21 @@ export async function POST(request: NextRequest) {
 
         const queue = await prisma.song.findMany({ where: { spaceId } });
         if (!queue) return NextResponse.json({ message: "Empty Queue" });
-        if (queue.length === 1) return NextResponse.json([{ queue }]);
+        if (queue.length === 1) return NextResponse.json(queue[0]);
 
-        let topSong = { votes: 0 };
+        let topSong = {
+            id: "",
+            spaceId: "",
+            title: "",
+            channel: "",
+            url: "https://www.youtube.com/watch?v=",
+            votes: 0,
+        };
         queue.map((song) => {
             if (song.votes >= topSong.votes) { topSong = song }
         })
 
+        await prisma.song.delete({ where: { id: topSong.id } })
         return NextResponse.json({ topSong })
     } catch (e) {
         console.error('Topsong API error:', e);

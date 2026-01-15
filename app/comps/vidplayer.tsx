@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import { Song } from '../lib/GetSession';
 import ReactPlayer from 'react-player';
+import axios from 'axios';
 
 interface PlayerProps {
   streaming: Song;
@@ -12,9 +13,12 @@ interface PlayerProps {
 export const VideoPlayer: React.FC<PlayerProps> = ({ streaming }) => {
 
     const [song, setSong] = useState<Song>(streaming);
+    const { spaceId } = streaming;
 
     const onEnd = async () => {
-        
+        const response = await axios.post('/api/space/topsong', { spaceId })
+        const { topSong } = response.data;
+        setSong(topSong);
     }
     return (
         <motion.div 
