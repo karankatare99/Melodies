@@ -5,22 +5,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp, Plus, X, Link as LinkIcon, Youtube } from 'lucide-react';
 import axios from 'axios';
 import { Song } from '../lib/GetSession';
+import { VideoPlayer } from './videoPlayer';
 
 interface QueueProps {
     initialQueue: Song[],
     spaceId: string
 }
 
-export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
+export const VideoComp: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
     const [queue, setQueue] = useState<Song[]>(initialQueue);
     const [justVotedId, setJustVotedId] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [urlInput, setUrlInput] = useState("");
 
     const handleVote = async (songId: string) => {
-
-        setQueue(queue => 
-            queue.map(song => 
+        setQueue(queue =>
+            queue.map(song =>
                 song.id === songId ? { ...song, votes: song.votes + 1 } : song
             )
         );
@@ -28,12 +28,11 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
         try {
             await axios.post('/api/space/votesong', { songId });
         } catch (e) {
-            setQueue(queue => 
-                queue.map(song => 
+            setQueue(queue =>
+                queue.map(song =>
                     song.id === songId ? { ...song, votes: song.votes - 1 } : song
                 )
             )
-
             console.error('Vote failed, reverted UI');
         }
 
@@ -42,7 +41,7 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
 
     const handleAddSong = async () => {
         try {
-            const res = await axios.post('/api/space/addsong', { spaceId, url:urlInput });
+            const res = await axios.post('/api/space/addsong', { spaceId, url: urlInput });
             const { newSong } = res.data;
             setQueue([...queue, newSong]);
             setIsModalOpen(false);
@@ -53,12 +52,17 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
     };
 
     return (
-        <>
+        <div className='flex flex-col lg:flex-row gap-8 w-full h-full'>
+            
+            <div className="w-full lg:flex-1 h-fit lg:sticky lg:top-24">
+                <VideoPlayer spaceId={spaceId} />
+            </div>
+
             <motion.div
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                className="bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 shadow-2xl relative overflow-hidden h-full min-h-150 flex flex-col"
+                className="w-full lg:w-112.5 shrink-0 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 shadow-2xl relative overflow-hidden h-[calc(100vh-140px)] flex flex-col"
             >
                 <div className="flex justify-between items-center mb-8 relative z-10">
                     <div>
@@ -78,48 +82,48 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
                 <div className="flex-1 overflow-y-auto overflow-x-hidden pr-2 relative z-10 space-y-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-700">
                     <AnimatePresence>
                         {[...queue]
-                        .sort((a, b) => b.votes - a.votes)
-                        .map((song, index) => (
-                            <motion.div
-                                key={song.url}
-                                layout
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{
-                                    opacity: 1,
-                                    y: 0,
-                                    backgroundColor: justVotedId === song.id ? "rgba(34, 211, 238, 0.2)" : "rgba(255, 255, 255, 0)",
-                                    borderColor: justVotedId === song.id ? "rgba(34, 211, 238, 0.5)" : "rgba(255, 255, 255, 0.1)"
-                                }}
-                                transition={{ duration: 0.4 }}
-                                className="flex items-center justify-between p-3 rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all group w-full"
-                            >
-                                <div className="flex items-center gap-4 flex-1 min-w-0">
-                                    <div className={`w-12 h-12 rounded-2xl bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 flex items-center justify-center text-white/70 font-bold shadow-sm shrink-0`}>
-                                        {index + 1}
+                            .sort((a, b) => b.votes - a.votes)
+                            .map((song, index) => (
+                                <motion.div
+                                    key={song.url}
+                                    layout
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{
+                                        opacity: 1,
+                                        y: 0,
+                                        backgroundColor: justVotedId === song.id ? "rgba(34, 211, 238, 0.2)" : "rgba(255, 255, 255, 0)",
+                                        borderColor: justVotedId === song.id ? "rgba(34, 211, 238, 0.5)" : "rgba(255, 255, 255, 0.1)"
+                                    }}
+                                    transition={{ duration: 0.4 }}
+                                    className="flex items-center justify-between p-3 rounded-3xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all group w-full"
+                                >
+                                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                                        <div className={`w-12 h-12 rounded-2xl bg-linear-to-br from-cyan-500 via-blue-500 to-purple-600 flex items-center justify-center text-white/70 font-bold shadow-sm shrink-0`}>
+                                            {index + 1}
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                            <h4 className="font-medium text-white truncate group-hover:text-cyan-200 transition-colors">
+                                                {song.title}
+                                            </h4>
+                                            <p className="text-sm text-slate-400 truncate">
+                                                {song.channel}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div className="min-w-0 flex-1">
-                                        <h4 className="font-medium text-white truncate group-hover:text-cyan-200 transition-colors">
-                                            {song.title}
-                                        </h4>
-                                        <p className="text-sm text-slate-400 truncate">
-                                            {song.channel}
-                                        </p>
-                                    </div>
-                                </div>
 
-                                <div className="flex items-center gap-3 pl-4 shrink-0">
-                                    <span className="font-mono text-sm text-slate-300 min-w-6 text-center">
-                                        {song.votes}
-                                    </span>
-                                    <button
-                                        onClick={() => handleVote(song.id)}
-                                        className="w-10 h-10 rounded-full bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-400/50 flex items-center justify-center text-slate-400 hover:text-cyan-400 transition-all active:scale-90 cursor-pointer"
-                                    >
-                                        <ArrowUp size={20} />
-                                    </button>
-                                </div>
-                            </motion.div>
-                        ))}
+                                    <div className="flex items-center gap-3 pl-4 shrink-0">
+                                        <span className="font-mono text-sm text-slate-300 min-w-6 text-center">
+                                            {song.votes}
+                                        </span>
+                                        <button
+                                            onClick={() => handleVote(song.id)}
+                                            className="w-10 h-10 rounded-full bg-white/5 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-400/50 flex items-center justify-center text-slate-400 hover:text-cyan-400 transition-all active:scale-90 cursor-pointer"
+                                        >
+                                            <ArrowUp size={20} />
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            ))}
                     </AnimatePresence>
                 </div>
 
@@ -184,6 +188,6 @@ export const VideoQueue: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
                     </div>
                 )}
             </AnimatePresence>
-        </>
+        </div>
     );
 };

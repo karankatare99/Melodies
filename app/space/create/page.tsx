@@ -1,6 +1,6 @@
-import { CreateSpace } from "@/app/comps/createspace";
-import { Background } from "@/app/comps/gradient";
-import { Navbar } from "@/app/comps/navbar";
+import { CreateSpace } from "@/app/comps/createSpace";
+import { Background } from "@/app/comps/Gradient";
+import { Navbar } from "@/app/comps/Navbar";
 import { getSession } from "@/app/lib/GetSession";
 
 

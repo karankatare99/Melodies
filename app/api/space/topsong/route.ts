@@ -14,26 +14,20 @@ export async function POST(request: NextRequest) {
 
         const { spaceId } = parseResult.data;
 
-        const queue = await prisma.song.findMany({ where: { spaceId } });
-        if (!queue) return NextResponse.json({ message: "Empty Queue" });
-        if (queue.length === 1) return NextResponse.json(queue[0]);
-
-        let topSong = {
-            id: "",
-            spaceId: "",
-            title: "",
-            channel: "",
-            url: "https://www.youtube.com/watch?v=",
-            votes: 0,
+        const queue = await prisma.song.findMany({ where: { spaceId }, orderBy: { votes: 'desc' } });
+        if (queue.length === 0) return NextResponse.json({ message: "Empty Queue" }, { status: 404 });
+        if (queue.length === 1) {
+            const lastSong = queue[0];
+            await prisma.song.delete({ where: { id: lastSong.id } });
+            return NextResponse.json({ topSong: lastSong })
         };
-        queue.map((song) => {
-            if (song.votes >= topSong.votes) { topSong = song }
-        })
 
+        const topSong = queue[0];
         await prisma.song.delete({ where: { id: topSong.id } })
+
         return NextResponse.json({ topSong })
     } catch (e) {
         console.error('Topsong API error:', e);
-        return NextResponse.json({ message: "Failed to fetch top Song" }, { status: 500 });
+        return NextResponse.json({ message: "Failed to fetch top Song" });
     }
 }

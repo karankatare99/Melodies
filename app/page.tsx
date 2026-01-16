@@ -1,6 +1,6 @@
-import { Background } from "./comps/gradient";
-import { Pagebody } from "./comps/homebody";
-import { Navbar } from "./comps/navbar";
+import { Background } from "./comps/Gradient";
+import { Pagebody } from "./comps/homeBody";
+import { Navbar } from "./comps/Navbar";
 import { getSession } from "./lib/GetSession";
 
 export default async function Home() {
