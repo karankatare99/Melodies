@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Song } from '../lib/GetSession';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
+import { Volume2, VolumeX } from 'lucide-react';
 
 interface PlayerProps {
   spaceId: string;
@@ -14,10 +15,11 @@ interface PlayerProps {
 export const VideoPlayer: React.FC<PlayerProps> = ({ spaceId, queue }) => {
     const [song, setSong] = useState<Song>();
     const [isLoading, setIsLoading] = useState(false);
+    const [isMuted, setIsMuted] = useState(false);
 
     useEffect(() => {
         onEnd()
-    }, [spaceId, queue])
+    }, [queue])
 
     const onEnd = async () => {
         if (isLoading) return
@@ -34,34 +36,48 @@ export const VideoPlayer: React.FC<PlayerProps> = ({ spaceId, queue }) => {
 
     return (
         <motion.div 
-        initial={{ x: -50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="bg-slate-900/60 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-6 shadow-2xl shadow-purple-500/10 relative overflow-hidden group"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="bg-slate-900/60 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-6 shadow-2xl shadow-purple-500/10 relative overflow-hidden group"
         >
-        <div className="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        <div className="relative w-full aspect-video rounded-4xl overflow-hidden mb-8 shadow-lg shadow-black/50 bg-slate-800">
-            <ReactPlayer
-                src={song?.url}
-                width="100%" 
-                height="100%" 
-                className="absolute top-0 left-0"
-                controls={false}
-                onEnded={onEnd}
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-slate-900/20 to-transparent pointer-events-none" />
-        </div>
+            <div className="absolute inset-0 bg-linear-to-br from-cyan-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            <div className="relative w-full aspect-video rounded-4xl overflow-hidden mb-8 shadow-lg shadow-black/50 bg-slate-800">
+                
+                <ReactPlayer
+                    src={song?.url}
+                    width="100%" 
+                    height="100%" 
+                    className="absolute top-0 left-0"
+                    controls={false}
+                    playing={true}
+                    muted={isMuted}
+                    onEnded={onEnd}
+                />
+                
+                <div className="absolute inset-0 bg-linear-to-t from-slate-900/40 to-transparent pointer-events-none" />
 
-        <div className="flex justify-between items-start mb-6 relative z-10">
-            <div>
-                <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-cyan-200 truncate pr-4">
-                    {song?.title}
-                </h2>
-                <p className="text-slate-400 text-lg">{song?.channel}</p>
+                <button
+                    onClick={() => setIsMuted(!isMuted)}
+                    className="absolute bottom-4 right-4 z-20 p-3 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/10 text-white transition-all hover:scale-110 active:scale-95 cursor-pointer group-hover:opacity-100 opacity-0 duration-300"
+                >
+                    {isMuted ? (
+                        <VolumeX size={20} />
+                    ) : (
+                        <Volume2 size={20} />
+                    )}
+                </button>
             </div>
 
-        </div>
-
+            <div className="flex justify-between items-start mb-6 relative z-10">
+                <div>
+                    <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-cyan-200 truncate pr-4">
+                        {song?.title}
+                    </h2>
+                    <p className="text-slate-400 text-lg">{song?.channel}</p>
+                </div>
+            </div>
         </motion.div>
     );
 };
