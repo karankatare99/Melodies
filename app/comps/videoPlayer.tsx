@@ -8,15 +8,16 @@ import axios from 'axios';
 
 interface PlayerProps {
   spaceId: string;
+  queue: Song[]
 }
 
-export const VideoPlayer: React.FC<PlayerProps> = ({ spaceId }) => {
+export const VideoPlayer: React.FC<PlayerProps> = ({ spaceId, queue }) => {
     const [song, setSong] = useState<Song>();
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         onEnd()
-    }, [spaceId])
+    }, [spaceId, queue])
 
     const onEnd = async () => {
         if (isLoading) return

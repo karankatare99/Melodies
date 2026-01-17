@@ -55,7 +55,7 @@ export const VideoComp: React.FC<QueueProps> = ({ initialQueue, spaceId }) => {
         <div className='flex flex-col lg:flex-row gap-8 w-full h-full'>
             
             <div className="w-full lg:flex-1 h-fit lg:sticky lg:top-24">
-                <VideoPlayer spaceId={spaceId} />
+                <VideoPlayer spaceId={spaceId} queue={queue} />
             </div>
 
             <motion.div
