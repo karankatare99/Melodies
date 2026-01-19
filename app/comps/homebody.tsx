@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Player from "./player";
+import Player from "./homePlayer";
 
 export const Pagebody = () => {
   return (

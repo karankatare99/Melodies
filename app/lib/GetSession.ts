@@ -33,7 +33,6 @@ export async function getSession(): Promise<SessionResponse> {
   const session = await auth();
   const email = session?.user?.email;
 
-
   if (!email) {
     return { user: null, space: null };
   }
