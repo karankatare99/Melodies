@@ -2,12 +2,16 @@ import { CreateSpace } from "@/app/comps/createSpace";
 import { Background } from "@/app/comps/Gradient";
 import { Navbar } from "@/app/comps/Navbar";
 import { getSession } from "@/app/lib/GetSession";
+import { redirect } from "next/navigation";
 
 
 export default async function CreateSpacePage() {
   const { user } = await getSession()
 
-  if (!user?.id) return
+  if (!user?.id) {
+    redirect('/api/auth/signin');
+  }
+
   const userId = user?.id
   
   return (

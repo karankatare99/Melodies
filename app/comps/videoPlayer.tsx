@@ -34,6 +34,12 @@ export const VideoPlayer: React.FC<PlayerProps> = ({ spaceId, queue }) => {
         }
     }
 
+    const onDurationChangeHandler = async () => {
+        await axios.post('/api/space/polling', {
+            spaceId
+        })
+    }
+
     return (
         <motion.div 
             initial={{ x: -50, opacity: 0 }}
@@ -54,6 +60,7 @@ export const VideoPlayer: React.FC<PlayerProps> = ({ spaceId, queue }) => {
                     playing={true}
                     muted={isMuted}
                     onEnded={onEnd}
+                    onDurationChange={onDurationChangeHandler}
                 />
                 
                 <div className="absolute inset-0 bg-linear-to-t from-slate-900/40 to-transparent pointer-events-none" />

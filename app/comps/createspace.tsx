@@ -13,7 +13,7 @@ export const CreateSpace:React.FC<SpaceCreateProps> = ({ userId }) => {
     const router = useRouter();
     
     const handleSubmit = async () => {
-        const response = await axios.post('/api/space', { userId, spaceName });
+        const response = await axios.post('/api/space/create', { userId, spaceName });
         const { spaceId } = response.data;
 
         router.push(`/space/${spaceId}`)
